@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: awsbe2
+  labels:
+    app: awsbe2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: awsbe2
+  template:
+    metadata:
+      labels:
+        app: awsbe2
+    spec:
+      containers:
+      - name: awsbe2
+        image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe:v3
+        ports:
+          - containerPort: 8000
+        env:
+          - name: USERNAME
+            valueFrom: 
+              secretKeyRef:
+                name: mysecret
+                key: username
+      nodeSelector:
+        cloud.google.com/gke-nodepool: highcpu
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: awsbe2-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: awsbe2
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: awsbe2-lb
+spec:
+  selector:
+    app: awsbe2
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: LoadBalancer
