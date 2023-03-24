@@ -50,3 +50,9 @@ kubectl autoscale deployment testapp --min=1 --max=5 --cpu-percent=70
 
 
 gcloud container clusters delete testapp --zone us-central1-c
+
+
+kubectl create secret generic db-user --from-literal=db-username='db-admin'
+
+
+gcloud container node-pools create node-pool-1 --cluster=sample-cluster
