@@ -8,6 +8,9 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         print ("Hello world 23423432432")
         print ('os.environ.get test', os.environ.get('ALARM_URL', 'no environment initialzed'))
+        kwargs.update({
+            'USERNAME': os.environ.get('USERNAME')
+        })
         return super().get_context_data(**kwargs)
     
 
