@@ -1,7 +1,7 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 meta:
-  name: awsbe-cron
+  name: awsbecron
 spec:
   schedule: "* * * * *"
   jobTemplate:
@@ -9,8 +9,8 @@ spec:
       template:
         spec:
           containers:
-           - name: awsbe-cron
+           - name: awsbecron
              image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe:v4
              command: ["bash"]
-             args: ["-c", "python /source/manage.py testcommand"]
+             args: ["-c", "python /code/manage.py testcommand"]
           restartPolicy: OnFailure
