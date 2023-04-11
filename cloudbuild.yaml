@@ -18,9 +18,11 @@ steps:
   #   env:
   #     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
   #     - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+  # custom build steps https://cloud.google.com/build/docs/configuring-builds/use-community-and-custom-builders
   - name: 'gcr.io/zippy-parity-381314/envsubst'
-    entrypoint: 'envsubst'
-    args: ['<', 'deploy.yaml', '>', 'deploy2.yaml']
+    # entrypoint: 'envsubst'
+    # args: ['<', 'deploy.yaml', '>', 'deploy2.yaml']
+    args: ["-e", "deploy2.yaml", "deploy.yaml"]
     # envsubst < mydeploy.yaml | kubectl apply -f -
     env:
       - 'PROJECT_ID=${PROJECT_ID}'
