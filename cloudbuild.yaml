@@ -26,8 +26,11 @@ steps:
       - '_ARTIFACT_REGISTRY_REPO=awsbe2'
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'kubectl'
-    args: ['apply', '-f', 'deploy.yaml']
+    entrypoint: 'envsubst'
+    args: ['<', 'deploy.yaml', '|', 'kubectl', apply', '-f']
+    # envsubst < mydeploy.yaml | kubectl apply -f -
+
+
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
       - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
