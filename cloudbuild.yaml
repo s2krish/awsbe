@@ -19,8 +19,15 @@ steps:
   #     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
   #     - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args: ['container', 'clusters', 'get-credentials', 'cluster-1', '--zone', 'us-central1-c', '--project', 'zippy-parity-381314']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'kubectl'
     args: ['apply', '-f', 'deploy.yaml']
+    # env:
+    #   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+    #   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
 
 options:
  logging: CLOUD_LOGGING_ONLY
