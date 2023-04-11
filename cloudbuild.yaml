@@ -19,7 +19,7 @@ steps:
   #     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
   #     - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
   # custom build steps https://cloud.google.com/build/docs/configuring-builds/use-community-and-custom-builders
-  - name: 'gcr.io/zippy-parity-381314/envsubst'
+  - name: 'gcr.io/${PROJECT_ID}/envsubst'
     # entrypoint: 'envsubst'
     # args: ['<', 'deploy.yaml', '>', 'deploy2.yaml']
     args: ["deploy.yaml"]
@@ -42,9 +42,9 @@ steps:
     entrypoint: 'kubectl'
     args: ['apply', '-f', 'deploy.yaml']
 
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+    # env:
+    #   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+    #   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
 
 options:
  logging: CLOUD_LOGGING_ONLY
