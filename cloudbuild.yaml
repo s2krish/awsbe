@@ -12,7 +12,7 @@ steps:
 
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/kubectl'
-    entrypoint: 'kubectl'
+    # entrypoint: 'kubectl'
     # args: ['set', 'image', 'deployment/awsbe2', 'awsbe2=us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/awsbe:${SHORT_SHA}']
     args: ['apply', '-f', 'deploy.yaml']
     env:
