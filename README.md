@@ -26,3 +26,6 @@ kubectl apply -f secret.yaml
 
 gcloud container clusters resize cluster-1 --node-pool highcpu --num-nodes=3 --zone=us-central1-c
 gcloud contaienr cluster update cluster-1 --enable-autoscale --min-nodes=1 --max-nodes=10
+
+
+# deploy redis-docker

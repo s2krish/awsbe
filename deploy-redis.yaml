@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redism1
+  labels:
+    app: redism1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redism1
+  template:
+    metadata:
+      labels:
+        app: redism1
+    spec:
+      containers:
+      - name: redism1
+        image: redis:7.0.10-alpine
+        ports:
+          - containerPort: 6379
+      nodeSelector:
+        cloud.google.com/gke-nodepool: redis-m1
