@@ -29,3 +29,7 @@ gcloud contaienr cluster update cluster-1 --enable-autoscale --min-nodes=1 --max
 
 
 # deploy redis-docker
+
+
+docker build -t us-central1-docker.pkg.dev/zippy-parity-381314/envsubst/envsubst:v1 .
+docker push us-central1-docker.pkg.dev/zippy-parity-381314/envsubst/envsubst:v1
