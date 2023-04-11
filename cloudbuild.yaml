@@ -10,41 +10,25 @@ steps:
     entrypoint: 'docker'
     args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/awsbe:${SHORT_SHA}']
 
-  # Docker push to Google Artifact Registry
-  # - name: 'gcr.io/cloud-builders/kubectl'
-  #   # entrypoint: 'kubectl'
-  #   # args: ['set', 'image', 'deployment/awsbe2', 'awsbe2=us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/awsbe:${SHORT_SHA}']
-  #   args: ['apply', '-f', 'deploy.yaml']
-  #   env:
-  #     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
-  #     - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
   # custom build steps https://cloud.google.com/build/docs/configuring-builds/use-community-and-custom-builders
+  # prepare deploy.yaml file
   - name: 'gcr.io/${PROJECT_ID}/envsubst'
-    # entrypoint: 'envsubst'
-    # args: ['<', 'deploy.yaml', '>', 'deploy2.yaml']
     args: ["deploy.yaml"]
-    # envsubst < mydeploy.yaml | kubectl apply -f -
     env:
       - 'PROJECT_ID=${PROJECT_ID}'
       - '_ARTIFACT_REGISTRY_REPO=${_ARTIFACT_REGISTRY_REPO}'
       - 'SHORT_SHA=${SHORT_SHA}'
 
+  # get k8s config
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args: ['container', 'clusters', 'get-credentials', 'cluster-1', '--zone', 'us-central1-c', '--project', 'zippy-parity-381314']
-    # env:
-    #   - 'PROJECT_ID=${PROJECT_ID}'
-    #   - '_ARTIFACT_REGISTRY_REPO=awsbe2'
 
-    # ${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/awsbe:${SHORT_SHA}
-
+  # run deployment
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'kubectl'
     args: ['apply', '-f', 'deploy.yaml']
 
-    # env:
-    #   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
-    #   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
 
 options:
  logging: CLOUD_LOGGING_ONLY
