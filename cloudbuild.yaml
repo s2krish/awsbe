@@ -40,7 +40,7 @@ steps:
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'kubectl'
-    args: [apply', '-f', 'deploy.yaml']
+    args: ['apply', '-f', 'deploy.yaml']
 
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
