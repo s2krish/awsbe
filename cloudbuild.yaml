@@ -22,7 +22,7 @@ steps:
   - name: 'gcr.io/zippy-parity-381314/envsubst'
     # entrypoint: 'envsubst'
     # args: ['<', 'deploy.yaml', '>', 'deploy2.yaml']
-    args: ["-e", "deploy2.yaml", "deploy.yaml"]
+    args: ["deploy.yaml"]
     # envsubst < mydeploy.yaml | kubectl apply -f -
     env:
       - 'PROJECT_ID=${PROJECT_ID}'
@@ -40,7 +40,7 @@ steps:
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'kubectl'
-    args: [apply', '-f', 'deploy2.yaml']
+    args: [apply', '-f', 'deploy.yaml']
 
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
