@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: awsbe2
-        image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe:v4
+        image: us-central1-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REGISTRY_REPO}/awsbe:${SHORT_SHA}
         ports:
           - containerPort: 8000
         env:
