@@ -123,3 +123,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+REDIS_HOST = os.environ.get('REDIS_HOST', '')

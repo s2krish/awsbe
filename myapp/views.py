@@ -4,8 +4,11 @@ import redis
 
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.conf import settings
+
 
 logger = logging.getLogger('ldjango')
+
 
 class IndexView(TemplateView):
     template_name = "index.html"
@@ -18,7 +21,7 @@ class IndexView(TemplateView):
         logger.debug("Debug log")
         logger.error("Error log")
 
-        conn = redis.from_url('redis://redism1-nhlcd:6379/1', decode_responses=True)
+        conn = redis.from_url(settings.REDIS_HOST, decode_responses=True)
         a_val = conn.get('a')
 
         kwargs.update({
