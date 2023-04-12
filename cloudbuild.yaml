@@ -22,7 +22,7 @@ steps:
   # get k8s config
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
-    args: ['container', 'clusters', 'get-credentials', '${CLOUDSDK_CONTAINER_CLUSTER}', '--zone', '${CLOUDSDK_COMPUTE_ZONE}', '--project', '${PROJECT_ID}']
+    args: ['container', 'clusters', 'get-credentials', '${_CLOUDSDK_CONTAINER_CLUSTER}', '--zone', '${_CLOUDSDK_COMPUTE_ZONE}', '--project', '${PROJECT_ID}']
 
   # run deployment
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -30,11 +30,10 @@ steps:
     args: ['apply', '-f', 'deploy.yaml']
 
 substitutions:
-    PROJECT_ID: zippy-parity-381314
     _ARTIFACT_REGISTRY_REPO: 'awsbe'
-    CLOUDSDK_CONTAINER_CLUSTER: cluster-1
+    _CLOUDSDK_CONTAINER_CLUSTER: cluster-1
     # CLOUDSDK_COMPUTE_REGION: 
-    CLOUDSDK_COMPUTE_ZONE: us-central1-c
+    _CLOUDSDK_COMPUTE_ZONE: us-central1-c
 
 options:
  logging: CLOUD_LOGGING_ONLY
