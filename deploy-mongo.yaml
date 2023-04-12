@@ -32,10 +32,6 @@ kind: Service
 metadata:
   name: mongo1-nhlcd
 spec:
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - port: 27017
     protocol: TCP
