@@ -1,7 +1,9 @@
+import os
 import logging
+import redis
+
 from django.shortcuts import render
 from django.views.generic import TemplateView
-import os
 
 logger = logging.getLogger('ldjango')
 
@@ -15,8 +17,13 @@ class IndexView(TemplateView):
         logger.warn("Warning log")
         logger.debug("Debug log")
         logger.error("Error log")
+
+        conn = redis.from_url('redis://redism1:6379/`', charset="utf-8", decode_responses=True)
+        a_val = conn.get('a')
+
         kwargs.update({
             'USERNAME': os.environ.get('USERNAME')
+            'a_val': a_val
         })
         return super().get_context_data(**kwargs)
     
