@@ -1,42 +1,53 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: mongo1
-  labels:
-    app: mongo1
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: mongo1
-  template:
-    metadata:
-      labels:
-        app: mongo1
-    spec:
-      containers:
-      - name: mongo1
-        image: mongo:5.0
-        ports:
-          - containerPort: 27017
-        env:
-        - name: MONGO_INITDB_ROOT_USERNAME
-          value: "root"
-        - name: MONGO_INITDB_ROOT_PASSWORD
-          value: "example"
-      nodeSelector:
-        cloud.google.com/gke-nodepool: mongo-m1
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo1-nhlcd
+  name: mongo
+  labels:
+    name: mongo
 spec:
   ports:
   - port: 27017
-    protocol: TCP
     targetPort: 27017
+  clusterIP: None
   selector:
-    app: mongo1
-  sessionAffinity: None
-  type: ClusterIP
+    role: mongo
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  serviceName: "mongo"
+  selector:
+    matchLabels:
+      role: mongo
+  template:
+    metadata:
+      labels:
+        role: mongo
+        environment: test
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mongo
+          image: : mongo:6.0.5
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+        - name: mongo-sidecar
+          image: cvallance/mongo-k8s-sidecar
+          env:
+            - name: MONGO_SIDECAR_POD_LABELS
+              value: "role=mongo,environment=test"
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-persistent-storage
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "fast"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 20Gi
