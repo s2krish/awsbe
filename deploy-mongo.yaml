@@ -1,41 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redism1
+  name: mongo1
   labels:
-    app: redism1
+    app: mongo1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redism1
+      app: mongo1
   template:
     metadata:
       labels:
-        app: redism1
+        app: mongo1
     spec:
       containers:
-      - name: redism1
-        image: redis:7.0.10-alpine
+      - name: mongo1
+        image: mongo:5.0
         ports:
-          - containerPort: 6379
+          - containerPort: 27017
       nodeSelector:
-        cloud.google.com/gke-nodepool: redis-m1
+        cloud.google.com/gke-nodepool: mongo-m1
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: redism1-nhlcd
+  name: mongo1-nhlcd
 spec:
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack
   ports:
-  - port: 6379
+  - port: 27017
     protocol: TCP
-    targetPort: 6379
+    targetPort: 27017
   selector:
-    app: redism1
+    app: mongo1
   sessionAffinity: None
   type: ClusterIP
