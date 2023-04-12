@@ -18,7 +18,7 @@ class IndexView(TemplateView):
         logger.debug("Debug log")
         logger.error("Error log")
 
-        conn = redis.from_url('redis://redism1:6379/`', charset="utf-8", decode_responses=True)
+        conn = redis.from_url('redis://redism1:6379/1', decode_responses=True)
         a_val = conn.get('a')
 
         kwargs.update({
