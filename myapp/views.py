@@ -22,7 +22,7 @@ class IndexView(TemplateView):
         a_val = conn.get('a')
 
         kwargs.update({
-            'USERNAME': os.environ.get('USERNAME')
+            'USERNAME': os.environ.get('USERNAME'),
             'a_val': a_val
         })
         return super().get_context_data(**kwargs)
