@@ -25,7 +25,12 @@ spec:
             valueFrom: 
               secretKeyRef:
                 name: mysecret
-                key: username
+                key: USERNAME
+          - name: REDIS_HOST
+            valueFrom: 
+              secretKeyRef:
+                name: mysecret
+                key: REDIS_HOST
       nodeSelector:
         cloud.google.com/gke-nodepool: highcpu
 ---
