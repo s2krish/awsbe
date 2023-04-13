@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: testcron
-            image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe:50f9092
+            image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe
             command: ["bash"]
             args: ["-c", "python /code/manage.py testcron"]
           nodeSelector:
@@ -29,7 +29,7 @@ spec:
         spec:
           containers:
           - name: testcommand
-            image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe:50f9092
+            image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe
             command: ["bash"]
             args: ["-c", "python /code/manage.py testcommand"]
           nodeSelector:
