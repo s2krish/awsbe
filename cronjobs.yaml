@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: awsbecron
+  name: testcron
 spec:
   schedule: "*/5 * * * *"
   jobTemplate:
@@ -9,7 +9,7 @@ spec:
       template:
         spec:
           containers:
-          - name: awsbecron
+          - name: testcron
             image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe:50f9092
             command: ["bash"]
             args: ["-c", "python /code/manage.py testcron"]
@@ -20,7 +20,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: awsbecron
+  name: testcommand
 spec:
   schedule: "*/10 * * * *"
   jobTemplate:
@@ -28,7 +28,7 @@ spec:
       template:
         spec:
           containers:
-          - name: awsbecron
+          - name: testcommand
             image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe:50f9092
             command: ["bash"]
             args: ["-c", "python /code/manage.py testcommand"]
@@ -39,12 +39,12 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: awsbecron-hpa
+  name: testcommand-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: CronJob
-    name: awsbecron
+    name: testcommand
   minReplicas: 1
   maxReplicas: 2
   metrics:
