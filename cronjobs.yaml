@@ -3,6 +3,25 @@ kind: CronJob
 metadata:
   name: awsbecron
 spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: awsbecron
+            image: us-central1-docker.pkg.dev/zippy-parity-381314/awsbe/awsbe:v4
+            command: ["bash"]
+            args: ["-c", "python /code/manage.py testcron"]
+          nodeSelector:
+            cloud.google.com/gke-nodepool: highcpu
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: awsbecron
+spec:
   schedule: "*/10 * * * *"
   jobTemplate:
     spec:
