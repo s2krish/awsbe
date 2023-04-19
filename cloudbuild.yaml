@@ -21,7 +21,7 @@ steps:
 
 
   # python test
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'python'
     args: ['pp.py']
 
