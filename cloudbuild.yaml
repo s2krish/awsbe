@@ -19,6 +19,12 @@ steps:
       - '_ARTIFACT_REGISTRY_REPO=${_ARTIFACT_REGISTRY_REPO}'
       - 'SHORT_SHA=${SHORT_SHA}'
 
+
+  # python test
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'python'
+    args: ['pp.py']
+
   # get k8s config
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
