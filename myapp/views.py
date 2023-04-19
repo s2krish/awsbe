@@ -21,12 +21,12 @@ class IndexView(TemplateView):
         logger.debug("Debug log")
         logger.error("Error log")
 
-        conn = redis.from_url(settings.REDIS_HOST, decode_responses=True)
-        a_val = conn.get('a')
+        # conn = redis.from_url(settings.REDIS_HOST, decode_responses=True)
+        # a_val = conn.get('a')
 
         kwargs.update({
             'USERNAME': os.environ.get('USERNAME'),
-            'a_val': a_val
+            # 'a_val': a_val
         })
         return super().get_context_data(**kwargs)
     
